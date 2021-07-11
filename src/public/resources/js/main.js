@@ -32,6 +32,7 @@ function addItem (value) {
 
   data.todo.push(value);
   dataObjectUpdated();
+  sendItemToAPI(value);
 }
 
 function renderTodoList() {
@@ -120,3 +121,22 @@ function addItemToDOM(text, completed) {
 
   list.insertBefore(item, list.childNodes[0]);
 }
+/**
+ * Method for sending
+*/
+sendItemToAPI = (item) => {
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', '/add');
+  xhr.setRequestHeader('Content-type', 'application/json');
+  xhr.send(JSON.stringify({item: item}));
+
+  xhr.addEventListener('load', () => {
+    console.log(xhr.responseText);
+  });
+
+  xhr.addEventListener('error', () => {
+    console.log('Shit, something bad happened.');
+    console.log(e);
+  });
+
+};
